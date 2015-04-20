@@ -1,0 +1,322 @@
+<html lang="en">
+    <head>
+        <title>ZigSnake Talk</title>
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="google-code-prettify/prettify.css" rel="stylesheet">
+        <link href="impress-custom.css" rel="stylesheet">
+    </head>
+    <body onload="prettyPrint()">
+        <div id="impress" data-transition-duration="1500">
+            <div class="step" data-x="0">
+                <h2 class="center green_color">Unit Testing Embedded Systems</h2>
+            </div>
+            <div class="step" data-x="1500">
+                <h2 class="green_color">About Me</h2>
+                <h3>Gabe Torres</h3>
+                <p>BuLogics CTO</p>
+            </div>
+            <div class="step" data-x="3000">
+                <img src="images/bulogics_pms.png" width="500" class="center">
+            </div>
+
+<!--
+   - TOC Slide
+   -->
+            <div class="step" data-x="4500">
+                <h2 class="center green_color">Overview</h2>
+            </div>
+            <div class="step" data-x="4500" data-y="100">
+                <p>What are embedded systems?</p>
+            </div>
+            <div class="step" data-x="4500" data-y="200">
+                <p>Unit Testing</p>
+            </div>
+            <div class="step" data-x="4500" data-y="300">
+                <p>Unity/Ceedling</p>
+            </div>
+            <div class="step" data-x="4500" data-y="400">
+                <p>Examples</p>
+            </div>
+            <div class="step" data-x="4500" data-y="500">
+                <p>Lessons Learned</p>
+            </div>
+
+<!--
+   - End of TOC Slide
+   -->
+
+<!--
+   - Intro to Embedded Slides
+   -->
+
+            <div class="step" data-x="5300" data-y="100" data-scale="0.05">
+                <h2 class="center green_color">What are embedded systems?</h2>
+            </div>
+            <div class="step" data-x="5400" data-y="100" data-scale="0.05">
+                <img src="images/embedded.jpg" class="center">
+            </div>
+            <div class="step" data-x="5500" data-y="88" data-scale="0.05">
+                <h2 class="green_color">Embedded Systems</h2>
+            </div>
+            <div class="step" data-x="5500" data-y="96" data-scale="0.05">
+                <p>8-bit &microCs to powerful ARM cores</p>
+            </div>
+            <div class="step" data-x="5500" data-y="102" data-scale="0.05">
+                <p>Interface with physical systems</p>
+            </div>
+            <div class="step" data-x="5500" data-y="106" data-scale="0.05">
+                <p>Programmed in C</p>
+            </div>
+            <div class="step" data-x="5500" data-y="110" data-scale="0.05">
+                <p>Memory constrained</p>
+            </div>
+            <div class="step" data-x="5500" data-y="116" data-scale="0.05">
+                <p>Single function (not general purpose)</p>
+            </div>
+
+<!--
+   - End of Embedded slides
+   -->
+
+<!--
+   - Start of unit testing slides
+   -->
+
+            <div class="step" data-x="5300" data-y="200" data-scale="0.05">
+                <h2 class="center green_color">Unit Testing</h2>
+            </div>
+
+
+            <div class="step" data-x="5400" data-y="194" data-scale="0.05">
+                <h2 class="green_color">Unit Testing & TDD</h2>
+            </div>
+            <div class="step" data-x="5400" data-y="198" data-scale="0.05">
+                <p>Test the smallest unit (function)</p>
+            </div>
+            <div class="step" data-x="5400" data-y="202" data-scale="0.05">
+                <p>Write test first, then write code</p>
+            </div>
+            <div class="step" data-x="5400" data-y="206" data-scale="0.05">
+                <p>Leads to clean design</p>
+            </div>
+            <div class="step" data-x="5400" data-y="210" data-scale="0.05">
+                <p>Hard in embedded!</p>
+            </div>
+
+            <!-- TODO: break this code sampele into separately highlightable sections -->
+
+
+            <div class="step" data-x="5500" data-y="200" data-scale="0.05">
+                <pre class="prettyprint" lang-c>
+uint8_t AddNumbers(uint8_t x, uint8_t y)
+{
+    return x+y;
+}
+                </pre>
+            </div>
+
+            <div class="step" data-x="5550" data-y="200" data-scale="0.05">
+                <pre class="prettyprint" lang-c>
+void test_AddNumbersShouldAddCorrectly(void)
+{
+    uint8_t result = AddNumbers(2, 4);
+    TEST_ASSERT_EQUAL(6, result);
+}
+
+void test_AddNumbersShouldHandleOverflow(void)
+{
+    uint8_t result = AddNumbers(0xFF, 1);
+    TEST_ASSERT_EQUAL(0, result);
+}
+                </pre>
+            </div>
+
+            <div class="step" data-x="5600" data-y="200" data-scale="0.05">
+                <pre class="prettyprint" lang-c>
+-------------------------
+OVERALL UNIT TEST SUMMARY
+-------------------------
+TESTED:  2
+PASSED:  2
+FAILED:  0
+IGNORED: 0
+                </pre>
+            </div>
+
+<!--
+   - End of unit testing slides
+   -->
+
+<!--
+   - Start of Intro to Ceedling
+   -->
+            <div class="step" data-x="5300" data-y="300" data-scale="0.05">
+                <h2 class="center green_color">Unity/Ceedling</h2>
+            </div>
+
+
+            <div class="step" data-x="5400" data-y="292" data-scale="0.05">
+                <h2 class="green_color">Unity</h2>
+            </div>
+            <div class="step" data-x="5400" data-y="300" data-scale="0.05">
+                <p>Unit test framework for embedded C</p>
+            </div>
+            <div class="step" data-x="5400" data-y="306" data-scale="0.05">
+                <p>www.throwtheswitch.org</p>
+            </div>
+            <div class="step" data-x="5400" data-y="314" data-scale="0.05">
+                <h2 class="green_color">Ceedling</h2>
+            </div>
+            <div class="step" data-x="5400" data-y="320" data-scale="0.05">
+                <p>Build framework for Unity</p>
+            </div>
+            <div class="step" data-x="5400" data-y="326" data-scale="0.05">
+                <p>Written in ruby, invoked by rake</p>
+            </div>
+
+
+<!--
+   -            <div id="zigsnake-overview-code" class="step" data-x="5400" data-y="300" data-scale="0.05">
+   -                [> display the full code sample <]
+   -            </div>
+   -            <div class="step" data-x="5400" data-y="286" data-scale="0.05">
+   -                <pre class="prettyprint" lang-python>
+   -from zcl import ZCL
+   -from zigbee import ZBController
+   -import unittest
+   -                </pre>
+   -            </div>
+   -            <div class="step" data-x="5400" data-y="296" data-scale="0.05">
+   -                <pre class="prettyprint" lang-python>
+   -class LevelControlTestCase(unittest.TestCase):
+   -    def setUp(self):
+   -        z = ZCL(['general.xml', 'ha.xml',
+   -                 'ha12.xml', 'ota.xml'])
+   -        con = ZBController()
+   -        con.open(192.168.1.134)
+   -        con.enable_permit_join()
+   -        device_id = con.wait_for_join()
+   -        con.disable_permit_join()
+   -                </pre>
+   -            </div>
+   -            <div class="step" data-x="5400" data-y="311" data-scale="0.05">
+   -                <pre class="prettyprint" lang-python>
+   -    def test_move_to_level_updates_attribute(self):
+   -        desired_level = 127
+   -        con.send_zcl_command(
+   -                device_id,
+   -                z.level_control.move_to_level(
+   -                        desired_level, 0))
+   -        level = con.read_attribute(
+   -                device_id, z.level_control.current_level)
+   -        self.assertEqual(level, desired_level)
+   -                </pre>
+   -            </div>
+   -->
+            <div class="step" data-x="5500" data-y="296" data-scale="0.05">
+                <pre class="prettyprint" lang-python>
+class TestBasicFunctionality(DoorLockTestCase):
+    def test_unlock(self):
+        raw_input("Make sure lock is locked. Press Enter")
+        conn.send_zcl_command(z.door_lock.unlock_door(''))
+        conn.expect_zcl_command(
+                z.door_lock.unlock_door_response(success))
+        self.assertConfirm("Did the bolt unlock?")
+                </pre>
+            </div>
+            <div class="step" data-x="5300" data-y="400" data-scale="0.05">
+                <h2 class="center">ZigSnake Internals</h2>
+            </div>
+            <div id="cluster-xml" class="step" data-x="5400" data-y="400" data-scale="0.05">
+            </div>
+            <div class="step" data-x="5400" data-y="394.5" data-scale="0.05">
+                <pre class="prettyprint" lang-xml>
+  &ltcluster&gt
+    &ltname&gtLevel Control&lt/name&gt
+    &ltcode&gt0x0008&lt/code&gt
+                </pre>
+            </div>
+            <div class="step" data-x="5400" data-y="400" data-scale="0.05">
+                <pre class="prettyprint" lang-xml>
+    &ltattribute side="server" code="0x0000"
+        type="INT8U"&gtcurrent level&lt/attribute&gt
+    &ltattribute side="server" code="0x0001"
+        type="INT16U"&gtremaining time&lt/attribute&gt
+                </pre>
+            </div>
+            <div class="step" data-x="5400" data-y="407" data-scale="0.05">
+                <pre class="prettyprint" lang-xml>
+    &ltcommand source="client" code="0x00" name="MoveToLevel"&gt
+      &ltarg name="level"          type="INT8U"/&gt
+      &ltarg name="transitionTime" type="INT16U"/&gt
+    &lt/command&gt
+  &lt/cluster&gt
+                </pre>
+            </div>
+            <div class="step" data-x="5500" data-y="400" data-scale="0.05">
+                <pre class="center" style="font-size:55px">import elementtree.ElementTree</pre>
+            </div>
+            <div class="step" data-x="5600" data-y="400" data-scale="0.05">
+                <pre class="prettyprint">
+class ZCL:</pre>
+                <pre class="prettyprint" style="opacity: 0.3">    def __init__(self, xml_files = None):
+        if not xml_files:
+            return
+        for xml_file in xml_files:
+            tree = xml.parse(xml_file)
+            root = tree.getroot()</pre>
+                <pre class="prettyprint">            for cluster_xml in root.iter('cluster'):
+                setattr(self, _attr_from_name(
+                        cluster_xml.find('name').text),
+                        ZCLCluster(cluster_xml))</pre>
+            </div>
+            <div class="step invisible-unless-active" data-x="5600" data-y="408.5" data-scale="0.001">
+                <pre class="prettyprint">
+class ZCLCluster:
+    def __init__(self, cluster_xml):
+        self.name = cluster_xml.find('name').text
+        self.define = cluster_xml.find('define').text
+        self.code = int(cluster_xml.find('code').text, 0)
+        self.add_commands(cluster_xml)
+        self.add_attributes(cluster_xml)
+
+    def add_commands(self, cluster_xml):
+        for cmd_xml in cluster_xml.findall('command'):
+            setattr(self,
+                    _attr_from_name(cmd_xml.get('name')),
+                    ZCLCommandPrototype(self.code, cmd_xml))
+
+    def add_attributes(self, cluster_xml):
+        for attr_xml in cluster_xml.findall('attribute'):
+            setattr(self,
+                    _attr_from_name(attr_xml.text),
+                    ZCLAttribute(self.code, attr_xml))
+                </pre>
+            </div>
+            <div class="step" data-x="5300" data-y="500" data-scale="0.05">
+                <h2 class="center">Live Demo</h2>
+            </div>
+            <div class="step" data-x="5500" data-y="500" data-scale="0.2">
+                <p>Spencer Russell</p>
+                <p style="clear: both">github.com/bulogics/zigsnake</p>
+                <p>
+                <!-- TODO: this is hacky -->
+                <span style="margin-left: 0px; margin-right: 40px; float: left">@ssfrr</span>
+                <span style="margin-left: 0px; margin-right: 40px; float: right">ssfrr.com</span>
+                <span style="margin-left: 0px; margin-right: 40px; float: left; clear:both">@bulogics</span>
+                <span style="margin-left: 0px; margin-right: 40px; float: right">bulogics.com</span>
+                </p>
+                <br style="clear:both">
+                <br>
+                <br>
+                <img class="center" src="images/a3_logo.png" width="600">
+            </div>
+            <div class="step" data-x="2500" data-y="0" data-scale="5">
+            </div>
+        </div> <!-- id=impress -->
+        <script src="impress.js/js/impress.js"></script>
+        <script type="text/javascript">impress().init();</script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="google-code-prettify/prettify.js"></script>
+    </body>
+</html>

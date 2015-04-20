@@ -1,0 +1,96 @@
+.step {
+    position: relative;
+    width: 1024;
+    padding: 0px;
+    margin: 0px;
+    opacity: 0.2;
+
+    -webkit-transition: opacity 1s;
+    -moz-transition:    opacity 1s;
+    -ms-transition:     opacity 1s;
+    -o-transition:      opacity 1s;
+    transition:         opacity 1s;
+}
+
+.step.active { opacity: 1 }
+
+.invisible-unless-active.step {
+    opacity: 0;
+}
+
+.invisible-unless-active.step.active {
+    opacity: 1;
+}
+
+h1 {
+    font-size: 200px;
+    line-height: 250px;
+    margin-left: 40px;
+}
+
+h2 {
+    font-size: 90px;
+    line-height: 125px;
+    margin-left: 40px;
+}
+
+h3 {
+    font-size: 70px;
+    line-height: 100px;
+    margin-left: 40px;
+}
+
+p {
+    font-size: 70px;
+    line-height: 90px;
+    margin-left: 40px;
+}
+
+pre {
+    font-size: 27px;
+    line-height: 30px;
+    border: none;
+    background-color: transparent;
+    padding: 0px;
+    margin-left: 40px;
+}
+
+pre.prettyprint {
+    border: none;
+    margin-left: 40px;
+}
+
+.impress-on-zigsnake-overview-code .step {
+    opacity: 1;
+}
+
+.impress-on-cluster-xml .step {
+    opacity: 1;
+}
+
+li {
+    font-size: 75px;
+    line-height: 100px;
+    list-style-type: none;
+    margin-left: 40px;
+}
+
+.center {
+    text-align: center;
+    margin-left: 0px;
+}
+
+.green_color{
+    color: #00763A;
+}
+
+
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.clear {
+    clear: both;
+}

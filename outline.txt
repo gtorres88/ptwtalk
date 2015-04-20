@@ -1,0 +1,17 @@
+Talk Outline:
+
+- Intro myself and Bulogics (1 min)
+- Intro embedded (1 min)
+- Intro unit testing (2 min)
+- Intro ceedling (2 min)
+- Walk through example (10-15 min)
+- Lessons learned (3 min)
+- Q/A (5 min)
+
+Lessons learned:
+
+- unit testing can be good
+- write, program, test. compare methodologies
+- failures in teaching unit testing
+- promised, but unrealistic expectations
+- home workh.
