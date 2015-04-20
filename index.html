@@ -444,39 +444,28 @@ class ZCL:</pre>
 
 
    -->
-            <div class="step invisible-unless-active" data-x="5600" data-y="408.5" data-scale="0.001">
-                <pre class="prettyprint">
-class ZCLCluster:
-    def __init__(self, cluster_xml):
-        self.name = cluster_xml.find('name').text
-        self.define = cluster_xml.find('define').text
-        self.code = int(cluster_xml.find('code').text, 0)
-        self.add_commands(cluster_xml)
-        self.add_attributes(cluster_xml)
 
-    def add_commands(self, cluster_xml):
-        for cmd_xml in cluster_xml.findall('command'):
-            setattr(self,
-                    _attr_from_name(cmd_xml.get('name')),
-                    ZCLCommandPrototype(self.code, cmd_xml))
-
-    def add_attributes(self, cluster_xml):
-        for attr_xml in cluster_xml.findall('attribute'):
-            setattr(self,
-                    _attr_from_name(attr_xml.text),
-                    ZCLAttribute(self.code, attr_xml))
-                </pre>
-            </div>
             <div class="step" data-x="5300" data-y="500" data-scale="0.05">
-                <h2 class="center">Live Demo</h2>
+                <h2 class="green_color">Unit Testing & TDD</h2>
             </div>
+            <div class="step" data-x="5300" data-y="506" data-scale="0.05">
+                <p>Detach from the hardware</p>
+            </div>
+            <div class="step" data-x="5300" data-y="510" data-scale="0.05">
+                <p>TDD leads to great design</p>
+            </div>
+            <div class="step" data-x="5300" data-y="514" data-scale="0.05">
+                <p>Borrow ideas from OOP</p>
+            </div>
+            <div class="step" data-x="5300" data-y="518" data-scale="0.05">
+                <p>Don't fear pointers!</p>
+            </div>
+
             <div class="step" data-x="5500" data-y="500" data-scale="0.2">
-                <p>Spencer Russell</p>
-                <p style="clear: both">github.com/bulogics/zigsnake</p>
+                <p>Gabe Torres</p>
+                <p style="clear: both">github.com/gtorres88/ptwtalk</p>
                 <p>
                 <!-- TODO: this is hacky -->
-                <span style="margin-left: 0px; margin-right: 40px; float: left">@ssfrr</span>
-                <span style="margin-left: 0px; margin-right: 40px; float: right">ssfrr.com</span>
                 <span style="margin-left: 0px; margin-right: 40px; float: left; clear:both">@bulogics</span>
                 <span style="margin-left: 0px; margin-right: 40px; float: right">bulogics.com</span>
                 </p>
