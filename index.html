@@ -174,6 +174,70 @@ IGNORED: 0
                 <p>Written in ruby, invoked by rake</p>
             </div>
 
+            <div class="step" data-x="5400" data-y="360" data-scale="0.05">
+                <h3 class="green_color">Structure</h3>
+            </div>
+            <div class="step" data-x="5400" data-y="374" data-scale="0.05">
+                <pre class="prettyprint" lang-c>
+- build             # Temporary build files
+- project.yml       # Ceedling configuration
+- rakefile.rb       # Rakefile to invoke ceedling
+- src               # C source files
+    - simple.c
+    - simple.h
+- test              # Test files, all prefixed by test_
+    - support
+    - test_simple.c
+- vendor
+    - ceedling      # Ceedling as a git submodule
+                </pre>
+            </div>
+
+            <div class="step" data-x="5500" data-y="320" data-scale="0.05">
+                <h3 class="green_color">Invocation</h3>
+            </div>
+            <div class="step" data-x="5500" data-y="334" data-scale="0.05">
+                <pre class="prettyprint" lang-c>
+prompt$ rake test:simple
+
+Test 'test_simple.c'
+--------------------
+Running test_simple.out...
+
+-------------------------
+OVERALL UNIT TEST SUMMARY
+-------------------------
+TESTED:  2
+PASSED:  2
+FAILED:  0
+IGNORED: 0
+                </pre>
+            </div>
+
+            <div class="step" data-x="5600" data-y="320" data-scale="0.05">
+                <h3 class="green_color">Test File</h3>
+            </div>
+            <div class="step" data-x="5600" data-y="334" data-scale="0.05">
+                <pre class="prettyprint" lang-c>
+void setUp(void)
+{
+    //runs before every test
+}
+
+void tearDown(void)
+{
+    //runs after every test
+}
+
+void test_ShouldDoSomething(void)
+{
+    TEST_MESSAGE("This test should do something");
+}
+                </pre>
+            </div>
+<!--
+   - End of Intro to Ceedling
+   -->
 
 <!--
    -            <div id="zigsnake-overview-code" class="step" data-x="5400" data-y="300" data-scale="0.05">
@@ -212,7 +276,6 @@ IGNORED: 0
    -        self.assertEqual(level, desired_level)
    -                </pre>
    -            </div>
-   -->
             <div class="step" data-x="5500" data-y="296" data-scale="0.05">
                 <pre class="prettyprint" lang-python>
 class TestBasicFunctionality(DoorLockTestCase):
@@ -224,38 +287,146 @@ class TestBasicFunctionality(DoorLockTestCase):
         self.assertConfirm("Did the bolt unlock?")
                 </pre>
             </div>
+
+   -->
+
+<!--
+   - Start of example
+   -->
             <div class="step" data-x="5300" data-y="400" data-scale="0.05">
-                <h2 class="center">ZigSnake Internals</h2>
-            </div>
-            <div id="cluster-xml" class="step" data-x="5400" data-y="400" data-scale="0.05">
-            </div>
-            <div class="step" data-x="5400" data-y="394.5" data-scale="0.05">
-                <pre class="prettyprint" lang-xml>
-  &ltcluster&gt
-    &ltname&gtLevel Control&lt/name&gt
-    &ltcode&gt0x0008&lt/code&gt
-                </pre>
+                <h2 class="center green_color">Walkthrough</h2>
             </div>
             <div class="step" data-x="5400" data-y="400" data-scale="0.05">
-                <pre class="prettyprint" lang-xml>
-    &ltattribute side="server" code="0x0000"
-        type="INT8U"&gtcurrent level&lt/attribute&gt
-    &ltattribute side="server" code="0x0001"
-        type="INT16U"&gtremaining time&lt/attribute&gt
-                </pre>
+                <h2 class="center green_color">Module Under Test:</h2>
             </div>
-            <div class="step" data-x="5400" data-y="407" data-scale="0.05">
-                <pre class="prettyprint" lang-xml>
-    &ltcommand source="client" code="0x00" name="MoveToLevel"&gt
-      &ltarg name="level"          type="INT8U"/&gt
-      &ltarg name="transitionTime" type="INT16U"/&gt
-    &lt/command&gt
-  &lt/cluster&gt
-                </pre>
+            <div class="step" data-x="5400" data-y="416" data-scale="0.05">
+                <p class="center">Simple UART protocol</p>
+                <img src="images/uart_protocol.jpg" width="600" class="center">
             </div>
             <div class="step" data-x="5500" data-y="400" data-scale="0.05">
-                <pre class="center" style="font-size:55px">import elementtree.ElementTree</pre>
+                <p class="center green_color" style="font-size:45px">
+                    HAL (Hardware Abstraction Layer) : BuSerial.h
+                </p>
             </div>
+            <div class="step" data-x="5500" data-y="410" data-scale="0.05">
+                <pre class="prettyprint" lang-c style="font-size:25px">
+typedef void (*CharReceivedCallback)(uint8_t, void *param);
+
+typedef struct SerialDevice
+{
+    void (*PutChar)(uint8_t);
+    uint8_t (*GetChar)(void);
+    void (*RegisterCharReceivedCallback)(CharReceivedCallback,
+          void *);
+} SerialDevice;
+                </pre>
+            </div>
+
+            <div class="step" data-x="5600" data-y="400" data-scale="0.05">
+                <p class="center green_color" style="font-size:45px">
+                    Module Interface
+                </p>
+            </div>
+            <div class="step" data-x="5600" data-y="410" data-scale="0.05">
+                <pre class="prettyprint" lang-c style="font-size:25px">
+//Definitions
+typedef enum
+{
+    PTW_SUCCESS = 0
+} PTW_STATUS;
+
+typedef void (*MessageCallback)(uint8_t cmd, uint8_t *payload, uint8_t len);
+
+//Exported functions
+void PTW_Init(SerialDevice *dev);
+PTW_STATUS PTW_SendMessage(uint8_t cmd, uint8_t *payload, uint8_t len);
+PTW_STATUS PTW_RegisterMessageHandler(MessageCallback *cb);
+                </pre>
+            </div>
+
+            <div class="step" data-x="5700" data-y="400" data-scale="0.05">
+                <p class="center green_color" style="font-size:45px">
+                    Tests!
+                </p>
+            </div>
+            <div class="step" data-x="5700" data-y="410" data-scale="0.05">
+                <pre class="prettyprint" lang-c style="font-size:25px">
+void test_SendMessageShouldPrependSOF(void);
+
+void test_SendMessageShouldIncludeLength(void);
+
+void test_SendMessageShouldIncludeCMD(void);
+
+void test_SendMessageShouldIncludeEOF(void);
+
+void test_SendMessageShouldIncludePayload(void);
+                </pre>
+            </div>
+
+            <div class="step" data-x="5700" data-y="435" data-scale="0.05">
+                <p class="center green_color" style="font-size:60px">
+                    But how do we know what is getting sent?
+                </p>
+            </div>
+
+            <div class="step" data-x="5800" data-y="400" data-scale="0.05">
+                <p class="center green_color" style="font-size:45px">
+                    Fakes!
+                </p>
+            </div>
+            <div class="step" data-x="5800" data-y="412" data-scale="0.05">
+                <pre class="prettyprint" lang-c style="font-size:25px">
+#define MAX_BUFFER_LENGTH 255
+
+typedef struct
+{
+    uint8_t bufferLength;
+    uint8_t buffer[MAX_BUFFER_LENGTH];
+} OutputBuffer;
+
+SerialDevice * FakeSerial_Create(void);
+void FakeSerial_Destroy(SerialDevice *dev);
+OutputBuffer FakeSerial_GetOutputBuffer(SerialDevice *dev);
+                </pre>
+            </div>
+
+            <div class="step" data-x="5900" data-y="400" data-scale="0.05">
+                <h1 class="center green_color">Demo</h1>
+            </div>
+
+<!--
+   - End of example
+   -->
+
+
+<!--
+   -
+   -            <div id="cluster-xml" class="step" data-x="5400" data-y="400" data-scale="0.05">
+   -            </div>
+   -            <div class="step" data-x="5400" data-y="394.5" data-scale="0.05">
+   -                <pre class="prettyprint" lang-xml>
+   -  &ltcluster&gt
+   -    &ltname&gtLevel Control&lt/name&gt
+   -    &ltcode&gt0x0008&lt/code&gt
+   -                </pre>
+   -            </div>
+   -            <div class="step" data-x="5400" data-y="400" data-scale="0.05">
+   -                <pre class="prettyprint" lang-xml>
+   -    &ltattribute side="server" code="0x0000"
+   -        type="INT8U"&gtcurrent level&lt/attribute&gt
+   -    &ltattribute side="server" code="0x0001"
+   -        type="INT16U"&gtremaining time&lt/attribute&gt
+   -                </pre>
+   -            </div>
+   -            <div class="step" data-x="5400" data-y="407" data-scale="0.05">
+   -                <pre class="prettyprint" lang-xml>
+   -    &ltcommand source="client" code="0x00" name="MoveToLevel"&gt
+   -      &ltarg name="level"          type="INT8U"/&gt
+   -      &ltarg name="transitionTime" type="INT16U"/&gt
+   -    &lt/command&gt
+   -  &lt/cluster&gt
+   -                </pre>
+   -            </div>
             <div class="step" data-x="5600" data-y="400" data-scale="0.05">
                 <pre class="prettyprint">
 class ZCL:</pre>
@@ -270,6 +441,9 @@ class ZCL:</pre>
                         cluster_xml.find('name').text),
                         ZCLCluster(cluster_xml))</pre>
             </div>
+
+
+   -->
             <div class="step invisible-unless-active" data-x="5600" data-y="408.5" data-scale="0.001">
                 <pre class="prettyprint">
 class ZCLCluster:
